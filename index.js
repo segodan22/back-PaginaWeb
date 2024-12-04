@@ -1,4 +1,6 @@
 import express from "express";
+import cors from "cors";
+import routeproductos from "./router/routerProducto.js";
 
 const app = express();
 
@@ -6,6 +8,9 @@ const PORT = 3000;
 
 app.use(express.json());
 
+app.use(cors());
+
+/*
 let productos = [{
     id: 1,
     nombre: "producto 1",
@@ -35,8 +40,12 @@ let productos = [{
 
 }
 ]
+*/
+
+app.use("/productos",routeproductos)
 
 
+/*
 app.get ("/productos", (req,res) => {
    try {
     res.status (200).json (productos);   
@@ -45,7 +54,7 @@ app.get ("/productos", (req,res) => {
    }
 
 })
-
+ 
 app.get ("/productos/:id", (req,res) => {
     try {
      const id = req.params.id;
@@ -60,6 +69,7 @@ app.get ("/productos/:id", (req,res) => {
     }
  
  })
+
 
   app.post ("/productos", (req,res) => {
     try {
@@ -124,6 +134,7 @@ app.get ("/productos/:id", (req,res) => {
    
 });
 
+
 app.delete ("/productos/:id", (req,res) => {
     try {
      const id = req.params.id;
@@ -139,6 +150,7 @@ app.delete ("/productos/:id", (req,res) => {
     }
  
  })
+
  app.delete ("/productos/definitivo/:id", (req,res) => {
     try {
      const id = req.params.id;
@@ -151,7 +163,7 @@ app.delete ("/productos/:id", (req,res) => {
     }
  
  })
-
+*/
 
 app.use ((req,res) => {
   
