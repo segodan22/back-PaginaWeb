@@ -1,33 +1,36 @@
 
 import { getProduct,getProducts,createProduct,updateProduct,deleteProduct } from "../service/serviceProducto.js";
 
-export const getProductsController  = (req,res) => {
+export const getProductsController  = async (req,res) => {
 
    try {
-        const productos = getProducts();    
-        res.status (200).json (productos);   
+        const productos = await getProducts();    
+        res.status (200).json ({status:"success",msg: "Listado de Productos",data: productos,});
+       
+           
        }catch (error) {
+        console.log (error);
         res.status (500).json ({status: "error",msg: "Error en el Servidor",data:{} });
        }
 
 }
 
-export const getProductController = (req,res) => {
+export const getProductController = async (req,res) => {
     try {
         const id = req.params.id;
-        const producto = getProduct(id);
+        const producto = await getProduct(id);
         if (!producto) {
             res.status (400).json ({status: "error",msg: "Producto no encontrado",data:{} });
        
            }else {
-            res.status (200).json ({status:"success",msg: "Listado de Productos",data: producto,});
+            res.status (200).json ({status:"success",msg: "Producto Seleccionado",data: producto,});
         }
        }catch (error) {
         res.status (500).json ({status: "error",msg: "Error en el Servidor",data:{} });
        }
 } 
 
-export const createProductController = (req,res) => {
+export const createProductController = async (req,res) => {
     try {
         const {nombre,precio} = req.body; 
         console.log (nombre,precio)
@@ -37,8 +40,8 @@ export const createProductController = (req,res) => {
        
         }   
         
-        const producto = createProduct({nombre,precio});
-        res.status (200).json ({status:"success",msg: "Listado de Productos",data: producto,});
+        const producto = await createProduct({nombre,precio});
+        res.status (200).json ({status:"success",msg: "Producto Creado",data: producto,});
         }catch (error) {
             res.status (500).json ({status: "error",msg: "Error en el Servidor",data:{} });
     }
@@ -58,7 +61,7 @@ export const updateProductController = (req,res) => {
            if (producto==-1) {
             res.status (400).json ({status: "error",msg: "Producto no encontrado",data:{} });
            }else {
-            res.status (200).json ({status:"success",msg: "Listado de Productos",data: producto,});
+            res.status (200).json ({status:"success",msg: "Producto Actualizado",data: producto,});
            }
          }      
         }    
@@ -79,7 +82,7 @@ export const deleteProductController = (req,res) => {
         if (!producto) {
             res.status (400).json ({status: "error",msg: "Producto no encontrado",data:{} });
            }else {
-            res.status (200).json ({status:"success",msg: "Listado de Productos",data: producto,});
+            res.status (200).json ({status:"success",msg: "Producto Eliminado",data: producto,});
         }
        }catch (error) {
         res.status (500).json ({status: "error",msg: "Error en el Servidor",data:{} });

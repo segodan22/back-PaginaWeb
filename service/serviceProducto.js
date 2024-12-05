@@ -1,61 +1,34 @@
-let productos = [{
-    id: 1,
-    nombre: "producto 1",
-    precio: 100 ,
-    ishabilitado : true
+import crypto from "crypto"
+import Producto from "../model/modelProducto.js"
 
-},
-{
-    id: 2,
-    nombre: "producto 2",
-    precio: 200 ,
-    ishabilitado : true
 
-},
-{
-    id: 3,
-    nombre: "producto 3",
-    precio: 300 ,
-    ishabilitado : true
-
-},
-{
-    id: 4,
-    nombre: "producto 4",
-    precio: 300 ,
-    ishabilitado : false
-
-}
-]
-export const getProducts = () => {
+export const getProducts = async () => {
+    const productos = await Producto.find();
     return productos
 }
 
-export const getProduct = (id) => {
-    const producto = productos.find (producto => producto.id == id);
+export const getProduct = async (id) => {
+    const producto = await Producto.find (producto => producto.id == id);
     return producto;
     }
 
 
-
-
-
-    export const createProduct = ({nombre,precio}) => {
+    export const createProduct = async ({nombre,precio}) => {
         const producto = {
-            id: productos.length + 1 ,
+            id: crypto.randomUUID(),
             nombre: nombre ,
             precio: precio ,
             ishabilitado : true
         }
-   
-        productos.push(producto);
-        return producto;
+        const producto1 = await Producto.create(producto);
+        //productos.push(producto);
+        return producto1;
         
     }
 
     export const updateProduct = () => {
 
-        const producto = productos.find (producto => producto.id == id);
+        const producto = this.getProduct(id);
         if (!producto){
             return -1
         }else {
@@ -67,7 +40,7 @@ export const getProduct = (id) => {
 
     export const deleteProduct = () => {
 
-        const producto = productos.find (producto => producto.id == id);
+        const producto = this.getProduct(id);
         
         if (!producto) {
             return -1
