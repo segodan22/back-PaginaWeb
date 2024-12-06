@@ -3,12 +3,12 @@ import Producto from "../model/modelProducto.js"
 
 
 export const getProducts = async () => {
-    const productos = await Producto.find();
-    return productos
+    const producto = await Producto.find();
+    return producto
 }
 
 export const getProduct = async (id) => {
-    const producto = await Producto.find (producto => producto.id == id);
+    const producto = await Producto.find({id:id});
     return producto;
     }
 
@@ -21,31 +21,22 @@ export const getProduct = async (id) => {
             ishabilitado : true
         }
         const producto1 = await Producto.create(producto);
-        //productos.push(producto);
-        return producto1;
+            return producto1;
         
     }
 
-    export const updateProduct = () => {
+    export const updateProduct = async(id,nombre,precio) =>  {
 
-        const producto = this.getProduct(id);
-        if (!producto){
-            return -1
-        }else {
-            producto.nombre = nombre;
-            producto.precio = precio;
-            return producto 
-        }
-    }
-
-    export const deleteProduct = () => {
-
-        const producto = this.getProduct(id);
+        const productoActualizado = await Producto.findOneAndUpdate({id},{nombre,precio})
+         return productoActualizado
+         }
         
-        if (!producto) {
-            return -1
-        } else {
-            producto.ishabilitado = false;
-        }
-        return producto
-    }
+       
+
+    export const deleteProduct = async (id) => {
+
+        const productoBorrado = await Producto.findOneAndUpdate({id},{ishabilitado:false})
+        return productoBorrado
+        
+     }
+        

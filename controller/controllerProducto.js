@@ -47,47 +47,45 @@ export const createProductController = async (req,res) => {
     }
 }
 
-export const updateProductController = (req,res) => {
+export const updateProductController = async(req,res) => {
     try {
         const {nombre,precio} = req.body;
         const id = req.params.id;
         
-        if (!nombre && !precio) {  
+        if (!nombre || !precio) {  
            
-            res.status (400).json ({status: "error",msg: "Producto no encontrado",data:{} });
-                
-            const producto = updateProduct({id,nombre,precio});
-      
-           if (producto==-1) {
-            res.status (400).json ({status: "error",msg: "Producto no encontrado",data:{} });
+            res.status (400).json ({status: "error",msg: "Faltan Datos",data:{} })
+        }
+         
+            const productoActualizado = await updateProduct(id,nombre,precio)
+                    
+           if (productoActualizado) {
+            res.status (200).json ({status: "success",msg: "Producto Actualizado",data:productoActualizado })
            }else {
-            res.status (200).json ({status:"success",msg: "Producto Actualizado",data: producto,});
+            res.status (400).json ({status:"error",msg: "No se Actualizo el Producto" ,data:{}})
            }
-         }      
-        }    
-        
-       catch (error) 
-       {
-        res.status (500).json ({status: "error",msg: "Error en el Servidor",data:{} });
+                   
+        } catch (error) {
+       console.log (error)
+       res.status (500).json ({status: "error",msg: "Error en el Servidor",data:{} });
     
        }
-      
    
 }
 
-export const deleteProductController = (req,res) => {
+export const deleteProductController = async (req,res) => {
     try {
         const id = req.params.id;
-        const producto = deleteProduct(id);
-        if (!producto) {
-            res.status (400).json ({status: "error",msg: "Producto no encontrado",data:{} });
-           }else {
-            res.status (200).json ({status:"success",msg: "Producto Eliminado",data: producto,});
+        const productoBorrado = await deleteProduct(id);
+        if (productoBorrado) {
+            res.status (200).json({status:"success", message:"producto borrado", data:productoBorrado})
+        }else{
+            return res.status(400).json({status:"error", message:"no se borro el prdoducto", data:{}})
         }
-       }catch (error) {
+       }catch (error)
+        {
+        console.log (error)
         res.status (500).json ({status: "error",msg: "Error en el Servidor",data:{} });
+        }   
     
-       }
-
-
 }
