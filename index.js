@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import routeproductos from "./router/routerProducto.js";
+import routeproveedores from "./router/routerProveedor.js";
 import env from "dotenv";
 import mongoose from "mongoose";
 
@@ -8,13 +9,19 @@ env.config();
 
 const app = express();
 
-const PORT = process.env.PORT ;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.use(cors());
+app.use(cors({
+    origin: "*",
+    allowedHeaders: ["Content-Type", "authorization", "x-refresh-token"],
+  }))
 
-app.use("/productos",routeproductos)
+
+    app.use("/productos",routeproductos)
+
+app.use("/proveedores",routeproveedores)
 
 app.use ((req,res) => {
   
