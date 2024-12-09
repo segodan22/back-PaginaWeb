@@ -21,7 +21,7 @@ app.use ((req,res) => {
      res.status (404).json ({error: "Error 404 Ruta no Encontrada"});
  });
 
-mongoose.connect(process.env.MONGO_URL).then(() => {
+mongoose.connect(process.env.MONGO_URL_EXTERNO).then(() => {
     console.log("Conectado a la Base de Datos Exitosa")
 }).catch((error) => console.log("error de conexion a la base de datos"));
 
