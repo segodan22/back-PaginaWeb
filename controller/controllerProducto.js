@@ -80,7 +80,7 @@ export const deleteProductController = async (req,res) => {
         if (productoBorrado) {
             res.status (200).json({status:"success", message:"producto borrado", data:productoBorrado})
         }else{
-            return res.status(400).json({status:"error", message:"no se borro el prdoducto", data:{}})
+            return res.status(400).json({status:"error", message:"no se borro el producto", data:{}})
         }
        }catch (error)
         {
