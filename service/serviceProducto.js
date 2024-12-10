@@ -13,11 +13,14 @@ export const getProduct = async (id) => {
     }
 
 
-    export const createProduct = async ({nombre,precio}) => {
+    export const createProduct = async ({title,descripcion,img,precio,contenido}) => {
         const producto = {
             id: crypto.randomUUID(),
-            nombre: nombre ,
+            title: title ,
+            descripcion: descripcion ,
+            img: img ,  
             precio: precio ,
+            contenido: contenido ,
             ishabilitado : true
         }
         const producto1 = await Producto.create(producto);
@@ -25,9 +28,9 @@ export const getProduct = async (id) => {
         
     }
 
-    export const updateProduct = async(id,nombre,precio) =>  {
+    export const updateProduct = async(id,title,descripcion,img,precio,contenido) =>  {
 
-        const productoActualizado = await Producto.findOneAndUpdate({id},{nombre,precio})
+        const productoActualizado = await Producto.findOneAndUpdate({id},{title,descripcion,img,precio,contenido})
          return productoActualizado
          }
         

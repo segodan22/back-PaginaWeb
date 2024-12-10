@@ -32,32 +32,33 @@ export const getProductController = async (req,res) => {
 
 export const createProductController = async (req,res) => {
     try {
-        const {nombre,precio} = req.body; 
-        console.log (nombre,precio)
+        const {title,descripcion,img,precio,contenido} = req.body; 
+        console.log (title,descripcion,img,precio,contenido)
         
-        if (!nombre || !precio) {
+        if (!title || !descripcion || !img || !precio || !contenido) {
             res.status (400).json ({status: "error",msg: "Producto no encontrado",data:{} });
        
         }   
         
-        const producto = await createProduct({nombre,precio});
+        const producto = await createProduct({title,descripcion,img,precio,contenido});
         res.status (200).json ({status:"success",msg: "Producto Creado",data: producto,});
         }catch (error) {
+            console.log (error)
             res.status (500).json ({status: "error",msg: "Error en el Servidor",data:{} });
     }
 }
 
 export const updateProductController = async(req,res) => {
     try {
-        const {nombre,precio} = req.body;
+        const {title,descripcion,img,precio,contenido} = req.body;
         const id = req.params.id;
         
-        if (!nombre || !precio) {  
+        if (!title || !descripcion || !img || !precio || !contenido) {  
            
             res.status (400).json ({status: "error",msg: "Faltan Datos",data:{} })
         }
          
-            const productoActualizado = await updateProduct(id,nombre,precio)
+            const productoActualizado = await updateProduct(id,title,descripcion,img,precio,contenido)
                     
            if (productoActualizado) {
             res.status (200).json ({status: "success",msg: "Producto Actualizado",data:productoActualizado })
